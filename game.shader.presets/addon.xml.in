@@ -16,6 +16,8 @@
     <license>GPL-3.0-or-later</license>
     <source>https://github.com/kodi-game/game.shader.presets</source>
     <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
     </assets>
   </extension>
 </addon>
