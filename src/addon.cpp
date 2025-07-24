@@ -108,40 +108,6 @@ bool CShaderPreset::ShaderPresetRead(preset_file file, video_shader &shader)
   return true;
 }
 
-void CShaderPreset::ShaderPresetWrite(preset_file file, const video_shader &shader)
-{
-  shader_preset_file *preset_file = static_cast<shader_preset_file*>(file);
-
-  rarch_video_shader rarch_shader;
-
-  CRarchTranslator::TranslateShader(shader, rarch_shader, preset_file->path);
-
-  video_shader_write_conf_cgp(preset_file->rarch_conf, &rarch_shader);
-
-  CRarchTranslator::FreeShader(rarch_shader);
-}
-
-bool CShaderPreset::ShaderPresetResolveParameters(preset_file file, video_shader &shader)
-{
-  shader_preset_file *preset_file = static_cast<shader_preset_file*>(file);
-
-  rarch_video_shader rarch_shader;
-
-  CRarchTranslator::TranslateShader(shader, rarch_shader, preset_file->path);
-
-  bool bSuccess = video_shader_resolve_parameters(preset_file->rarch_conf, &rarch_shader);
-
-  if (bSuccess)
-  {
-    ShaderPresetFree(shader);
-    CRarchTranslator::TranslateShader(rarch_shader, shader, preset_file->path);
-  }
-
-  CRarchTranslator::FreeShader(rarch_shader);
-
-  return bSuccess;
-}
-
 void CShaderPreset::ShaderPresetFree(video_shader &shader)
 {
   for (unsigned int i = 0; i < shader.pass_count; i++)

@@ -41,23 +41,6 @@ SHADER_SCALE_TYPE CRarchTranslator::TranslateScaleType(enum gfx_scale_type type)
   return SHADER_SCALE_TYPE_INPUT;
 }
 
-enum gfx_scale_type CRarchTranslator::TranslateScaleType(SHADER_SCALE_TYPE type)
-{
-  switch (type)
-  {
-  case SHADER_SCALE_TYPE_INPUT:
-    return RARCH_SCALE_INPUT;
-  case SHADER_SCALE_TYPE_ABSOLUTE:
-    return RARCH_SCALE_ABSOLUTE;
-  case SHADER_SCALE_TYPE_VIEWPORT:
-    return RARCH_SCALE_VIEWPORT;
-  default:
-    break;
-  }
-
-  return RARCH_SCALE_INPUT;
-}
-
 SHADER_FILTER_TYPE CRarchTranslator::TranslateFilterType(unsigned int type)
 {
   switch (type)
@@ -73,23 +56,6 @@ SHADER_FILTER_TYPE CRarchTranslator::TranslateFilterType(unsigned int type)
   }
 
   return SHADER_FILTER_TYPE_UNSPEC;
-}
-
-unsigned int CRarchTranslator::TranslateFilterType(SHADER_FILTER_TYPE type)
-{
-  switch (type)
-  {
-  case SHADER_FILTER_TYPE_UNSPEC:
-    return RARCH_FILTER_UNSPEC;
-  case SHADER_FILTER_TYPE_LINEAR:
-    return RARCH_FILTER_LINEAR;
-  case SHADER_FILTER_TYPE_NEAREST:
-    return RARCH_FILTER_NEAREST;
-  default:
-    break;
-  }
-
-  return RARCH_FILTER_UNSPEC;
 }
 
 SHADER_WRAP_TYPE CRarchTranslator::TranslateWrapType(enum gfx_wrap_type type)
@@ -109,25 +75,6 @@ SHADER_WRAP_TYPE CRarchTranslator::TranslateWrapType(enum gfx_wrap_type type)
   }
 
   return SHADER_WRAP_TYPE_BORDER;
-}
-
-enum gfx_wrap_type CRarchTranslator::TranslateWrapType(SHADER_WRAP_TYPE type)
-{
-  switch (type)
-  {
-  case SHADER_WRAP_TYPE_BORDER:
-    return RARCH_WRAP_BORDER;
-  case SHADER_WRAP_TYPE_EDGE:
-    return RARCH_WRAP_EDGE;
-  case SHADER_WRAP_TYPE_REPEAT:
-    return RARCH_WRAP_REPEAT;
-  case SHADER_WRAP_TYPE_MIRRORED_REPEAT:
-    return RARCH_WRAP_MIRRORED_REPEAT;
-  default:
-    break;
-  }
-
-  return RARCH_WRAP_DEFAULT;
 }
 
 void CRarchTranslator::TranslateShaderPass(const rarch_video_shader_pass &rarch_pass, video_shader_pass &pass, const std::string &configPath)
@@ -194,62 +141,6 @@ void CRarchTranslator::TranslateShaderPass(const rarch_video_shader_pass &rarch_
   pass.mipmap = rarch_pass.mipmap;
 }
 
-void CRarchTranslator::TranslateShaderPass(const video_shader_pass &pass, rarch_video_shader_pass &rarch_pass, const std::string &configPath)
-{
-  rarch_pass.source.path[0] = '\0';
-  if (pass.source_path != nullptr)
-    TranslateAbsPath(rarch_pass.source.path, PATH_MAX_LENGTH, pass.source_path, configPath);
-
-  rarch_pass.source.string.vertex = nullptr;
-  if (pass.vertex_source != nullptr)
-  {
-    unsigned int vertex_len = std::strlen(pass.vertex_source);
-    rarch_pass.source.string.vertex = static_cast<char*>(malloc(vertex_len + 1));
-    std::strcpy(rarch_pass.source.string.vertex, pass.vertex_source);
-  }
-
-  rarch_pass.source.string.fragment = nullptr;
-  if (pass.fragment_source != nullptr)
-  {
-    unsigned int fragment_len = std::strlen(pass.fragment_source);
-    rarch_pass.source.string.fragment = static_cast<char*>(malloc(fragment_len + 1));
-    std::strcpy(rarch_pass.source.string.fragment, pass.fragment_source);
-  }
-
-  rarch_pass.alias[0] = '\0';
-
-  auto &rarch_fbo = rarch_pass.fbo;
-  auto &fbo = pass.fbo;
-
-  rarch_fbo.fp_fbo = fbo.fp_fbo;
-  rarch_fbo.srgb_fbo = fbo.srgb_fbo;
-  rarch_fbo.type_x = TranslateScaleType(fbo.scale_x.type);
-  rarch_fbo.type_y = TranslateScaleType(fbo.scale_y.type);
-  switch (rarch_fbo.type_x)
-  {
-  case RARCH_SCALE_ABSOLUTE:
-    rarch_fbo.abs_x = fbo.scale_x.abs;
-    break;
-  default:
-    rarch_fbo.scale_x = fbo.scale_x.scale;
-    break;
-  }
-  switch (fbo.scale_y.type)
-  {
-  case RARCH_SCALE_ABSOLUTE:
-    rarch_fbo.abs_y = fbo.scale_y.abs;
-    break;
-  default:
-    rarch_fbo.scale_y = fbo.scale_y.scale;
-    break;
-  }
-
-  rarch_pass.filter = TranslateFilterType(pass.filter);
-  rarch_pass.wrap = TranslateWrapType(pass.wrap);
-  rarch_pass.frame_count_mod = pass.frame_count_mod;
-  rarch_pass.mipmap = pass.mipmap;
-}
-
 void CRarchTranslator::TranslateShaderLut(const rarch_video_shader_lut &rarch_lut, video_shader_lut &lut, const std::string &configPath)
 {
   lut.id = nullptr;
@@ -268,21 +159,6 @@ void CRarchTranslator::TranslateShaderLut(const rarch_video_shader_lut &rarch_lu
   lut.filter = TranslateFilterType(rarch_lut.filter);
   lut.wrap = TranslateWrapType(rarch_lut.wrap);
   lut.mipmap = rarch_lut.mipmap;
-}
-
-void CRarchTranslator::TranslateShaderLut(const video_shader_lut &lut, rarch_video_shader_lut &rarch_lut, const std::string &configPath)
-{
-  rarch_lut.id[0] = '\0';
-  if (lut.id != nullptr)
-    std::strcpy(rarch_lut.id, lut.id);
-
-  rarch_lut.path[0] = '\0';
-  if (lut.path != nullptr)
-    TranslateAbsPath(rarch_lut.path, PATH_MAX_LENGTH, lut.path, configPath);
-
-  rarch_lut.filter = TranslateFilterType(lut.filter);
-  rarch_lut.wrap = TranslateWrapType(lut.wrap);
-  rarch_lut.mipmap = lut.mipmap;
 }
 
 void CRarchTranslator::TranslateShaderParameter(const rarch_video_shader_parameter &rarch_param, video_shader_parameter &param)
@@ -308,23 +184,6 @@ void CRarchTranslator::TranslateShaderParameter(const rarch_video_shader_paramet
   param.initial = rarch_param.initial;
   param.maximum = rarch_param.maximum;
   param.step = rarch_param.step;
-}
-
-void CRarchTranslator::TranslateShaderParameter(const video_shader_parameter &param, rarch_video_shader_parameter &rarch_param)
-{
-  rarch_param.id[0] = '\0';
-  if (param.id != nullptr)
-    std::strcpy(rarch_param.id, param.id);
-
-  rarch_param.desc[0] = '\0';
-  if (param.desc != nullptr)
-    std::strcpy(rarch_param.desc, param.desc);
-
-  rarch_param.current = param.current;
-  rarch_param.minimum = param.minimum;
-  rarch_param.initial = param.initial;
-  rarch_param.maximum = param.maximum;
-  rarch_param.step = param.step;
 }
 
 void CRarchTranslator::TranslateShader(const rarch_video_shader &rarch_shader, video_shader &shader, const std::string &configPath)
@@ -355,32 +214,6 @@ void CRarchTranslator::TranslateShader(const rarch_video_shader &rarch_shader, v
     for (unsigned int i = 0; i < shader.parameter_count; i++)
       TranslateShaderParameter(rarch_shader.parameters[i], shader.parameters[i]);
   }
-}
-
-void CRarchTranslator::TranslateShader(const video_shader &shader, rarch_video_shader &rarch_shader, const std::string &configPath)
-{
-  rarch_shader.type = RARCH_SHADER_NONE; //! @todo
-
-  rarch_shader.modern = false;
-  rarch_shader.prefix[0] = '\0';
-
-  rarch_shader.passes = shader.pass_count;
-  for (unsigned int i = 0; i < rarch_shader.passes; i++)
-    TranslateShaderPass(shader.passes[i], rarch_shader.pass[i], configPath);
-
-  rarch_shader.luts = shader.lut_count;
-  for (unsigned int i = 0; i < rarch_shader.luts; i++)
-    TranslateShaderLut(shader.luts[i], rarch_shader.lut[i], configPath);
-
-  rarch_shader.num_parameters = shader.parameter_count;
-  for (unsigned int i = 0; i < rarch_shader.num_parameters; i++)
-    TranslateShaderParameter(shader.parameters[i], rarch_shader.parameters[i]);
-
-  rarch_shader.variables = 0;
-  rarch_shader.script_path[0] = '\0';
-  rarch_shader.script = nullptr;
-  rarch_shader.script_class[0] = '\0';
-  rarch_shader.feedback_pass = -1;
 }
 
 void CRarchTranslator::TranslateRelativePath(char *&absPath, const char *relPath, const std::string &configPath)
