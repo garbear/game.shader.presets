@@ -22,7 +22,6 @@ set(SHADERPRESETS_SOURCES src/addon.cpp
                      src/utils/URIUtils.cpp
                      src/depends/file_path_special.c
                      src/depends/gfx/video_shader_parse.c
-                     src/depends/gfx/video_state_tracker.c
                      src/depends/libretro-common/compat/compat_posix_string.c
                      src/depends/libretro-common/compat/compat_strcasestr.c
                      src/depends/libretro-common/compat/compat_strl.c
@@ -46,7 +45,6 @@ set(SHADERPRESETS_HEADERS src/addon.h
                      src/utils/URIUtils.h
                      src/depends/file_path_special.h
                      src/depends/gfx/video_shader_parse.h
-                     src/depends/gfx/video_state_tracker.h
                      src/depends/libretro-common/include/boolean.h
                      src/depends/libretro-common/include/compat/msvc.h
                      src/depends/libretro-common/include/compat/posix_string.h

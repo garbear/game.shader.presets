@@ -84,7 +84,7 @@ bool CShaderPreset::ShaderPresetRead(preset_file file, video_shader &shader)
 
   rarch_video_shader rarch_shader;
 
-  bool readResult = video_shader_read_conf_cgp(preset_file->rarch_conf, &rarch_shader);
+  bool readResult = video_shader_load_current_parameter_values(preset_file->rarch_conf, &rarch_shader);
   if (!readResult)
     return false;
 

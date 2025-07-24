@@ -112,8 +112,8 @@ void CRarchTranslator::TranslateShaderPass(const rarch_video_shader_pass &rarch_
   auto &fbo = pass.fbo;
   auto &rarch_fbo = rarch_pass.fbo;
 
-  fbo.fp_fbo = rarch_fbo.fp_fbo;
-  fbo.srgb_fbo = rarch_fbo.srgb_fbo;
+  fbo.fp_fbo = rarch_fbo.flags & FBO_SCALE_FLAG_FP_FBO;
+  fbo.srgb_fbo = rarch_fbo.flags & FBO_SCALE_FLAG_SRGB_FBO;
   fbo.scale_x.type = TranslateScaleType(rarch_fbo.type_x);
   fbo.scale_y.type = TranslateScaleType(rarch_fbo.type_y);
   switch (fbo.scale_x.type)
