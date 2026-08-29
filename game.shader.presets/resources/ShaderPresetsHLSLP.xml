@@ -70,4 +70,279 @@
         <folder>Handheld</folder>
         <name>Game Boy</name>
     </preset>
+    <preset>
+        <path>hlsl/xbr/xbr-lv2.cgp</path>
+        <folder>xBR</folder>
+        <name>xBR-lv2</name>
+    </preset>
+    <preset>
+        <path>hlsl/xbr/xbr-lv2-noblend.cgp</path>
+        <folder>xBR</folder>
+        <name>xBR-lv2 (no blend)</name>
+    </preset>
+    <preset>
+        <path>hlsl/xbrz/4xbrz-linear.cgp</path>
+        <folder>xBRZ</folder>
+        <name>4xBRZ Linear</name>
+    </preset>
+    <preset>
+        <path>hlsl/xbrz/xbrz-freescale.cgp</path>
+        <folder>xBRZ</folder>
+        <name>xBRZ Freescale</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-hyllian.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT Hyllian</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-easymode.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT EasyMode</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/dot.cgp</path>
+        <folder>Handheld</folder>
+        <name>Dot</name>
+    </preset>
+    <preset>
+        <path>hlsl/borders/color-grid.cgp</path>
+        <folder>Borders</folder>
+        <name>Color Grid</name>
+    </preset>
+    <preset>
+        <path>hlsl/borders/shiny-iterations.cgp</path>
+        <folder>Borders</folder>
+        <name>Shiny Iterations</name>
+    </preset>
+    <preset>
+        <path>hlsl/borders/snow.cgp</path>
+        <folder>Borders</folder>
+        <name>Snow</name>
+    </preset>
+    <preset>
+        <path>hlsl/anti-aliasing/reverse-aa.cgp</path>
+        <folder>Anti-Aliasing</folder>
+        <name>Reverse AA</name>
+    </preset>
+    <preset>
+        <path>hlsl/anti-aliasing/fx-aa.cgp</path>
+        <folder>Anti-Aliasing</folder>
+        <name>FXAA</name>
+    </preset>
+    <preset>
+        <path>hlsl/anti-aliasing/aa-shader-4.o-level2.cgp</path>
+        <folder>Anti-Aliasing</folder>
+        <name>AA Shader 4.0 Level 2</name>
+    </preset>
+    <preset>
+        <path>hlsl/bicubic/bicubic-fast.cgp</path>
+        <folder>Interpolation</folder>
+        <name>Bicubic Fast</name>
+    </preset>
+    <preset>
+        <path>hlsl/bicubic/bicubic-sharp.cgp</path>
+        <folder>Interpolation</folder>
+        <name>Bicubic Sharp</name>
+    </preset>
+    <preset>
+        <path>hlsl/interpolation/pixellate.cgp</path>
+        <folder>Interpolation</folder>
+        <name>Pixellate</name>
+    </preset>
+    <preset>
+        <path>hlsl/interpolation/sharp-bilinear.cgp</path>
+        <folder>Interpolation</folder>
+        <name>Sharp Bilinear</name>
+    </preset>
+    <preset>
+        <path>hlsl/windowed/jinc2-sharp.cgp</path>
+        <folder>Interpolation</folder>
+        <name>Jinc2 Sharp</name>
+    </preset>
+    <preset>
+        <path>hlsl/ddt/ddt-extended.cgp</path>
+        <folder>Interpolation</folder>
+        <name>DDT Extended</name>
+    </preset>
+    <preset>
+        <path>hlsl/sharpen/adaptive-sharpen.cgp</path>
+        <folder>Effects</folder>
+        <name>Adaptive Sharpen</name>
+    </preset>
+    <preset>
+        <path>hlsl/scalehq/4xScaleHQ.cgp</path>
+        <folder>Scale</folder>
+        <name>4x ScaleHQ</name>
+    </preset>
+    <preset>
+        <path>hlsl/hqx/single-pass/hq2x.cgp</path>
+        <folder>Scale</folder>
+        <name>HQ2x</name>
+    </preset>
+    <preset>
+        <path>hlsl/sabr/sabr-v3.0.cgp</path>
+        <folder>Scale</folder>
+        <name>SABR v3.0</name>
+    </preset>
+    <preset>
+        <path>hlsl/dithering/gdapt.cgp</path>
+        <folder>Effects</folder>
+        <name>GDAPT</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-aperture.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT Aperture</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-caligari.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT Caligari</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-cgwg-fast.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT CGWG Fast</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-hyllian-fast.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT Hyllian Fast</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-lottes-fast.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT Lottes Fast</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/crt-nes-mini.cgp</path>
+        <folder>CRT</folder>
+        <name>CRT NES Mini</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/zfast-crt.cgp</path>
+        <folder>CRT</folder>
+        <name>Zfast CRT</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/dotmask.cgp</path>
+        <folder>CRT</folder>
+        <name>Dotmask</name>
+    </preset>
+    <preset>
+        <path>hlsl/cgp/tvout/tvout.cgp</path>
+        <folder>TV</folder>
+        <name>TVout</name>
+    </preset>
+    <preset>
+        <path>hlsl/cgp/tvout/tvout+ntsc-256px-composite.cgp</path>
+        <folder>TV</folder>
+        <name>TVout + NTSC Composite (256px)</name>
+    </preset>
+    <preset>
+        <path>hlsl/cgp/tvout/tvout+ntsc-320px-svideo.cgp</path>
+        <folder>TV</folder>
+        <name>TVout + NTSC S-Video (320px)</name>
+    </preset>
+    <preset>
+        <path>hlsl/cgp/tvout/gtu-famicom-240p.cgp</path>
+        <folder>TV</folder>
+        <name>GTU Famicom 240p</name>
+    </preset>
+    <preset>
+        <path>hlsl/ntsc/ntsc-256px-svideo.cgp</path>
+        <folder>NTSC</folder>
+        <name>NTSC S-Video (256px)</name>
+    </preset>
+    <preset>
+        <path>hlsl/ntsc/ntsc-vcr.cgp</path>
+        <folder>NTSC</folder>
+        <name>NTSC VCR</name>
+    </preset>
+    <preset>
+        <path>hlsl/crt/snes-hires-blend.cgp</path>
+        <folder>CRT</folder>
+        <name>SNES Hi-Res Blend</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/bevel.cgp</path>
+        <folder>Handheld</folder>
+        <name>Bevel</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/gb-palette-pocket.cgp</path>
+        <folder>Handheld</folder>
+        <name>GB Pocket Palette</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/lcd-grid-v2-gba-color.cgp</path>
+        <folder>Handheld</folder>
+        <name>LCD Grid v2 (GBA)</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/lcd-grid-v2-nds-color.cgp</path>
+        <folder>Handheld</folder>
+        <name>LCD Grid v2 (NDS)</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/lcd-grid-v2-psp-color.cgp</path>
+        <folder>Handheld</folder>
+        <name>LCD Grid v2 (PSP)</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/zfast-lcd.cgp</path>
+        <folder>Handheld</folder>
+        <name>Zfast LCD</name>
+    </preset>
+    <preset>
+        <path>hlsl/cgp/retro-v2+gba-color.cgp</path>
+        <folder>Handheld</folder>
+        <name>Retro v2 + GBA Color</name>
+    </preset>
+    <preset>
+        <path>hlsl/cgp/gameboy-colors.cgp</path>
+        <folder>Handheld</folder>
+        <name>Game Boy Colors</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/console-border/gg-4x.cgp</path>
+        <folder>Console</folder>
+        <name>Game Gear 4x</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/console-border/gbc-4x.cgp</path>
+        <folder>Console</folder>
+        <name>GBC 4x</name>
+    </preset>
+    <preset>
+        <path>hlsl/handheld/console-border/psp-2x.cgp</path>
+        <folder>Console</folder>
+        <name>PSP 2x</name>
+    </preset>
+    <preset>
+        <path>hlsl/borders/imgborder.cgp</path>
+        <folder>Borders</folder>
+        <name>Image Border</name>
+    </preset>
+    <preset>
+        <path>hlsl/borders/sgb/sgb.cgp</path>
+        <folder>Borders</folder>
+        <name>Super Game Boy Border</name>
+    </preset>
+    <preset>
+        <path>hlsl/borders/water.cgp</path>
+        <folder>Borders</folder>
+        <name>Water Border</name>
+    </preset>
+    <preset>
+        <path>hlsl/mudlord/oldtv.cgp</path>
+        <folder>Effects</folder>
+        <name>Old TV</name>
+    </preset>
+    <preset>
+        <path>hlsl/waterpaint/waterpaint.cgp</path>
+        <folder>Effects</folder>
+        <name>Waterpaint</name>
+    </preset>
 </presets>
