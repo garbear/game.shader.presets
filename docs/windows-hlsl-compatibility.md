@@ -975,4 +975,86 @@ These three curated GL/GL ES presets have no functional HLSL equivalent in the a
 
 ## Runtime qualification failures
 
-None recorded. This task performs static qualification only; Task 2 will populate this section with compile, log, switching, or visual failures found in a running Windows Kodi session.
+Runtime qualification was performed on Windows with Kodi `22.0-BETA2 (21.90.802) Git:20260829-a74b193a2c`, the `game.shader.presets` `22.1.3` add-on, `game.libretro.xrick` `0.21212.0.50`, and a Parallels Display Adapter at D3D feature level 11_1. The executable under test was the x64 Debug build at `C:\Users\garrett\Documents\kodi\build\Debug\kodi.exe`; the deployed manifest and HLSL resource tree came from this repository.
+
+Each of the 55 Task 1 additions was selected in one fresh, visible, portable Kodi process. Qualification required an exact `RetroPlayer.VideoFilter` absolute-path match, a recognizable full-screen XRick composite screenshot, inspection of the complete fresh `kodi.log`, a scan for shader/parser/resource/D3D/LUT failures, and bounded shutdown. All 55 paths matched and all 55 screenshots were inspected. The first pass produced 29 clean normal-shutdown runs, 23 runs with documented shader failures, and three clean force-stop-only runs. The latter three (`DDT Extended`, `4x ScaleHQ`, and `Retro v2 + GBA Color`) each passed a fresh exact-path, clean-log, visually acceptable, normal-shutdown retest. Six isolated runs required the executable-guarded bounded force stop; three already had decisive shader failures, and the other three passed the normal-shutdown retests.
+
+The final result is 30 retained additions and 25 removals, leaving 44 Windows HLSL presets total (the 14 pre-existing entries plus 30 additions). Evidence below is relative to `.superpowers/sdd/2026-08-29-expand-windows-shader-presets/`. The static-feature column maps a retained preset to the renderer fidelity work that could still improve it; `none` means the static audit found no unsupported feature in the audited categories.
+
+### Addition results
+
+| # | Preset path | Static feature | Runtime result and blocker | Evidence |
+|---:|---|---|---|---|
+| 1 | `hlsl/xbr/xbr-lv2.cgp` | filter/wrap | **REMOVE** — HLSL X3014 numeric-constructor argument count; shader initialization failed. | `runtime-isolated/01-xbr_xbr-lv2.cgp/` |
+| 2 | `hlsl/xbr/xbr-lv2-noblend.cgp` | filter/wrap | **REMOVE** — HLSL X3014 numeric-constructor argument count; shader initialization failed. | `runtime-isolated/02-xbr_xbr-lv2-noblend.cgp/` |
+| 3 | `hlsl/xbrz/4xbrz-linear.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/03-xbrz_4xbrz-linear.cgp/` |
+| 4 | `hlsl/xbrz/xbrz-freescale.cgp` | filter/wrap | **REMOVE** — HLSL X3503 `main_vertex` return value missing semantics; shader initialization failed. | `runtime-isolated/04-xbrz_xbrz-freescale.cgp/` |
+| 5 | `hlsl/crt/crt-hyllian.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/05-crt_crt-hyllian.cgp/` |
+| 6 | `hlsl/crt/crt-easymode.cgp` | filter/wrap | **REMOVE** — HLSL X3014 numeric-constructor argument count; shader initialization failed. | `runtime-isolated/06-crt_crt-easymode.cgp/` |
+| 7 | `hlsl/handheld/dot.cgp` | filter/wrap | **REMOVE** — HLSL X3004 undeclared `IN`; shader initialization failed. | `runtime-isolated/07-handheld_dot.cgp/` |
+| 8 | `hlsl/borders/color-grid.cgp` | none | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/08-borders_color-grid.cgp/` |
+| 9 | `hlsl/borders/shiny-iterations.cgp` | none | **REMOVE** — HLSL X3004 undeclared `vec4`; shader initialization failed. | `runtime-isolated/09-borders_shiny-iterations.cgp/` |
+| 10 | `hlsl/borders/snow.cgp` | none | **REMOVE** — HLSL X3004 undeclared `vec4`; shader initialization failed and the screenshot was visibly corrupt. | `runtime-isolated/10-borders_snow.cgp/` |
+| 11 | `hlsl/anti-aliasing/reverse-aa.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/11-anti-aliasing_reverse-aa.cgp/` |
+| 12 | `hlsl/anti-aliasing/fx-aa.cgp` | filter/wrap | **REMOVE** — `CRPWinShader::CreateInputLayout` could not get a shader description; input-layout creation failed. | `runtime-isolated/12-anti-aliasing_fx-aa.cgp/` |
+| 13 | `hlsl/anti-aliasing/aa-shader-4.o-level2.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/13-anti-aliasing_aa-shader-4.o-level2.cgp/` |
+| 14 | `hlsl/bicubic/bicubic-fast.cgp` | filter/wrap | **REMOVE** — HLSL X3503 `main_vertex` return value missing semantics; shader initialization failed. | `runtime-isolated/14-bicubic_bicubic-fast.cgp/` |
+| 15 | `hlsl/bicubic/bicubic-sharp.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/15-bicubic_bicubic-sharp.cgp/` |
+| 16 | `hlsl/interpolation/pixellate.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/16-interpolation_pixellate.cgp/` |
+| 17 | `hlsl/interpolation/sharp-bilinear.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/17-interpolation_sharp-bilinear.cgp/` |
+| 18 | `hlsl/windowed/jinc2-sharp.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/18-windowed_jinc2-sharp.cgp/` |
+| 19 | `hlsl/ddt/ddt-extended.cgp` | filter/wrap | **PASS** — initial clean force-stop-only trigger; fresh retest had exact path, clean log, acceptable composite, and normal shutdown. | `runtime-isolated/19-ddt_ddt-extended.cgp/`; `runtime-retest-19/` |
+| 20 | `hlsl/sharpen/adaptive-sharpen.cgp` | filter/wrap | **REMOVE** — `CRPWinShader::CreateInputLayout` could not get a shader description; input-layout creation failed. | `runtime-isolated/20-sharpen_adaptive-sharpen.cgp/` |
+| 21 | `hlsl/scalehq/4xScaleHQ.cgp` | filter/wrap | **PASS** — initial clean force-stop-only trigger; fresh retest had exact path, clean log, acceptable composite, and normal shutdown. | `runtime-isolated/21-scalehq_4xScaleHQ.cgp/`; `runtime-retest-21/` |
+| 22 | `hlsl/hqx/single-pass/hq2x.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/22-hqx_single-pass_hq2x.cgp/` |
+| 23 | `hlsl/sabr/sabr-v3.0.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/23-sabr_sabr-v3.0.cgp/` |
+| 24 | `hlsl/dithering/gdapt.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/24-dithering_gdapt.cgp/` |
+| 25 | `hlsl/crt/crt-aperture.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal isolated shutdown; also passed a normal single-target live-switch run. | `runtime-isolated/25-crt_crt-aperture.cgp/`; `runtime-live-switch-singles/batch-15/` |
+| 26 | `hlsl/crt/crt-caligari.cgp` | filter/wrap | **REMOVE** — HLSL X3503 `main_vertex` return value missing semantics; shader initialization failed. | `runtime-isolated/26-crt_crt-caligari.cgp/` |
+| 27 | `hlsl/crt/crt-cgwg-fast.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/27-crt_crt-cgwg-fast.cgp/` |
+| 28 | `hlsl/crt/crt-hyllian-fast.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/28-crt_crt-hyllian-fast.cgp/` |
+| 29 | `hlsl/crt/crt-lottes-fast.cgp` | filter/wrap | **REMOVE** — HLSL X3507 not all `CrtsMask` control paths return a value; shader initialization failed. | `runtime-isolated/29-crt_crt-lottes-fast.cgp/` |
+| 30 | `hlsl/crt/crt-nes-mini.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/30-crt_crt-nes-mini.cgp/` |
+| 31 | `hlsl/crt/zfast-crt.cgp` | filter/wrap | **REMOVE** — HLSL X3000 unrecognized `vec2` and `p`; shader initialization failed. | `runtime-isolated/31-crt_zfast-crt.cgp/` |
+| 32 | `hlsl/crt/dotmask.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/32-crt_dotmask.cgp/` |
+| 33 | `hlsl/cgp/tvout/tvout.cgp` | none | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/33-cgp_tvout_tvout.cgp/` |
+| 34 | `hlsl/cgp/tvout/tvout+ntsc-256px-composite.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/34-cgp_tvout_tvout_ntsc-256px-composite.cgp/` |
+| 35 | `hlsl/cgp/tvout/tvout+ntsc-320px-svideo.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/35-cgp_tvout_tvout_ntsc-320px-svideo.cgp/` |
+| 36 | `hlsl/cgp/tvout/gtu-famicom-240p.cgp` | filter/wrap | **REMOVE** — HLSL X3000 unexpected `[` plus X3014 numeric-constructor argument count; shader initialization failed. | `runtime-isolated/36-cgp_tvout_gtu-famicom-240p.cgp/` |
+| 37 | `hlsl/ntsc/ntsc-256px-svideo.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/37-ntsc_ntsc-256px-svideo.cgp/` |
+| 38 | `hlsl/ntsc/ntsc-vcr.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/38-ntsc_ntsc-vcr.cgp/` |
+| 39 | `hlsl/crt/snes-hires-blend.cgp` | filter/wrap | **REMOVE** — clean log but the full-resolution composite was black except for the mouse cursor. | `runtime-isolated/39-crt_snes-hires-blend.cgp/` |
+| 40 | `hlsl/handheld/bevel.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal isolated shutdown; also passed a normal single-target live-switch run. | `runtime-isolated/40-handheld_bevel.cgp/`; `runtime-live-switch-singles/batch-25/` |
+| 41 | `hlsl/handheld/gb-palette-pocket.cgp` | filter/wrap | **REMOVE** — HLSL X3000 unrecognized `fixed4` and `out_color`; shader initialization failed. | `runtime-isolated/41-handheld_gb-palette-pocket.cgp/` |
+| 42 | `hlsl/handheld/lcd-grid-v2-gba-color.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/42-handheld_lcd-grid-v2-gba-color.cgp/` |
+| 43 | `hlsl/handheld/lcd-grid-v2-nds-color.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/43-handheld_lcd-grid-v2-nds-color.cgp/` |
+| 44 | `hlsl/handheld/lcd-grid-v2-psp-color.cgp` | filter/wrap | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/44-handheld_lcd-grid-v2-psp-color.cgp/` |
+| 45 | `hlsl/handheld/zfast-lcd.cgp` | filter/wrap | **REMOVE** — HLSL X3503 `main_vertex` return value missing semantics; shader initialization failed. | `runtime-isolated/45-handheld_zfast-lcd.cgp/` |
+| 46 | `hlsl/cgp/retro-v2+gba-color.cgp` | filter/wrap | **PASS** — initial clean force-stop-only trigger; fresh retest had exact path, clean log, acceptable composite, and normal shutdown. | `runtime-isolated/46-cgp_retro-v2_gba-color.cgp/`; `runtime-retest-46/` |
+| 47 | `hlsl/cgp/gameboy-colors.cgp` | none | **PASS** — exact path, clean log, acceptable composite, normal shutdown. | `runtime-isolated/47-cgp_gameboy-colors.cgp/` |
+| 48 | `hlsl/handheld/console-border/gg-4x.cgp` | filter/wrap; LUT wrap | **REMOVE** — HLSL X3014 numeric-constructor argument count; shader initialization failed and the screenshot was visibly corrupt. | `runtime-isolated/48-handheld_console-border_gg-4x.cgp/` |
+| 49 | `hlsl/handheld/console-border/gbc-4x.cgp` | filter/wrap; LUT wrap | **REMOVE** — HLSL X3014 numeric-constructor argument count; shader initialization failed. | `runtime-isolated/49-handheld_console-border_gbc-4x.cgp/` |
+| 50 | `hlsl/handheld/console-border/psp-2x.cgp` | filter/wrap; LUT wrap | **REMOVE** — input-layout description/creation failed and the screenshot was visibly corrupt. | `runtime-isolated/50-handheld_console-border_psp-2x.cgp/` |
+| 51 | `hlsl/borders/imgborder.cgp` | none | **REMOVE** — HLSL X3004 undeclared `mix`; shader initialization failed. | `runtime-isolated/51-borders_imgborder.cgp/` |
+| 52 | `hlsl/borders/sgb/sgb.cgp` | none | **REMOVE** — clean log but the game was an unusably tiny central thumbnail in an otherwise blank field. | `runtime-isolated/52-borders_sgb_sgb.cgp/` |
+| 53 | `hlsl/borders/water.cgp` | none | **REMOVE** — HLSL X3004 undeclared `vec4`; shader initialization failed. | `runtime-isolated/53-borders_water.cgp/` |
+| 54 | `hlsl/mudlord/oldtv.cgp` | filter/wrap | **REMOVE** — input-layout description/creation failed and the screenshot was visibly corrupt. | `runtime-isolated/54-mudlord_oldtv.cgp/` |
+| 55 | `hlsl/waterpaint/waterpaint.cgp` | filter/wrap | **REMOVE** — HLSL X3037 constructor used a non-numeric base type; shader initialization failed. | `runtime-isolated/55-waterpaint_waterpaint.cgp/` |
+
+### Blocker-to-future-work map
+
+- **HLSL source/compiler portability (19 removals):** 1, 2, 4, 6, 7, 9, 10, 14, 26, 29, 31, 36, 41, 45, 48, 49, 51, 53, and 55. These presets become candidates only after their shader sources compile successfully through Kodi's D3DCompiler path. The table records the exact compiler class for each preset; this is shader-source compatibility work, not evidence that a missing preset-parser feature alone would unlock them.
+- **D3D input-layout reflection/creation (4 removals):** 12, 20, 50, and 54. Kodi compiled far enough to attempt layout creation but could not obtain a usable shader description. Renderer work that expands or hardens input-layout reflection should retest exactly these four presets.
+- **Valid-looking load with unusable visual output (2 removals):** 39 and 52. Neither emitted a documented shader/resource/D3D/LUT signature, so future work needs output-geometry/pass-chain investigation rather than compiler repair.
+- **Static renderer feature gaps:** the exhaustive frame-history/feedback, original/non-immediate-pass, pass-alias, filter/wrap, intermediate-mipmap, and LUT-wrap lists above remain the authoritative maps from missing renderer features to the full set of presets they may unlock or improve. No missing-source, LUT-load, texture-load, sampler, or target-texture failure was observed in the retained set.
+
+### Live switching and regressions
+
+After deploying the pruned 44-entry manifest, all 30 retained additions were exercised through Kodi's live Estuary video-filter panel in six restart-bounded five-item batches. Every focused `ListItem.Property(game.videofilter)` value matched the intended absolute path, and each batch's seeded active `RetroPlayer.VideoFilter` value matched its first intended path. All final batch logs had zero documented shader/parser/resource/D3D/LUT signatures. Four batches shut down normally. Two aggregate batches needed bounded force stop during preview teardown; pair isolation narrowed those timing events to batches ending at `CRT Aperture` and `Bevel`, and fresh single-target live-switch runs for both were exact-path, clean-log, visually acceptable, and normal-shutdown. The initial TCP response-framing artifact is retained separately as harness evidence; the corrected framing test passed before the final batches. Final switching evidence is in `runtime-live-switch-final-closed/`, `runtime-live-switch-subsets/`, `runtime-live-switch-singles/`, and `test-runtime-json.ps1`.
+
+| Regression preset | Static feature | Result | Evidence |
+|---|---|---|---|
+| Scale 2x — `hlsl/scalenx/scale2x.cgp` | filter/wrap | **PASS** — fresh process, exact path, clean full log, acceptable composite, normal shutdown. | `runtime-regressions/01-scalenx_scale2x.cgp/` |
+| CRT Geom — `hlsl/crt/crt-geom.cgp` | filter/wrap | **PASS** — fresh process, exact path, clean full log, acceptable composite, normal shutdown. | `runtime-regressions/02-crt_crt-geom.cgp/` |
+| NTSC — `hlsl/ntsc/ntsc.cgp` | filter/wrap | **PASS** — fresh process, exact path, clean full log, acceptable composite, normal shutdown. | `runtime-regressions/03-ntsc_ntsc.cgp/` |
+| Game Boy — `hlsl/cgp/gameboy-screen-grid.cgp` | none | **PASS** — fresh process, exact path, clean full log, acceptable composite, normal shutdown. | `runtime-regressions/04-cgp_gameboy-screen-grid.cgp/` |
