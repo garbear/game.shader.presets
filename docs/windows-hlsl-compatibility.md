@@ -10,9 +10,9 @@ This is the finalized static and runtime-qualified compatibility ledger for Kodi
 
 The audit parses every preset assignment for shader passes, LUT declarations and sampler fields, aliases, feedback/history, per-pass filter and wrap controls, mipmap inputs, and float/sRGB framebuffer requests. Shader paths are resolved relative to each preset. Includes are then followed recursively relative to the including source, with cycles deduplicated. All report paths are normalized relative to `libretro/`.
 
-Comment-free transitive source is scanned case-sensitively for the RetroArch resource identifiers `ORIG`, `PASSPREV`, numbered `PASS`, and the `PREV` family, plus `COMPAT_*` macro use. The generic declarations in `compat_orig_struct.inc` and `compat_prev_struct.inc` are recorded as includes but excluded from resource-use detection; only a shader's actual reference creates a blocker. A preset can appear in every applicable group below.
+Comment-free transitive source is scanned for exact, case-sensitive RetroArch resource identifiers: `ORIG`, `PASSPREV` (optionally numbered), numbered `PASS`, and `PREV` (optionally numbered), plus `COMPAT_*` macro use. Identifier boundaries exclude arbitrary longer names such as `ORIG_LINEARIZED`. A finite allowlist separately recognizes the resource accessors declared by `compat_orig_struct.inc` and `compat_prev_struct.inc` (for example, `ORIG_Sample`, `ORIG_texture`, `PASSPREV_Sample`, and `PASSPREV_texture`); declaration-only `INITIALIZE_*` macros do not create a blocker. Those generic include declarations are recorded as sources but excluded from resource-use detection; only a shader's actual use creates a blocker.
 
-Any frame history/feedback, original or non-immediate pass resource, or pass alias is a hard blocker because Kodi D3D binds only the current pass input (`decal`) plus parameters and LUTs. Filter/wrap controls, intermediate mipmaps, and LUT wrap requests are fidelity limitations, not static rejections; affected candidates remain eligible for visual runtime qualification.
+A non-empty pass alias is a hard blocker only when its exact identifier is referenced by the comment-free transitive source of a later shader pass; empty and unreferenced alias declarations do not require alias binding. Any frame history/feedback, original or non-immediate pass resource, or downstream reference to a declared pass alias is a hard blocker because Kodi D3D binds only the current pass input (`decal`) plus parameters and LUTs. Filter/wrap controls, intermediate mipmaps, and LUT wrap requests are fidelity limitations, not static rejections; affected candidates remain eligible for visual runtime qualification. A preset can appear in every applicable group below.
 
 ## Renderer capability matrix
 
@@ -28,7 +28,7 @@ Any frame history/feedback, original or non-immediate pass resource, or pass ali
 | Frame count | Supported | Eligible |
 | Frame history, feedback, or `PREV` resources | Unsupported | Hard blocker |
 | `ORIG`, `PASSPREV`, or arbitrary numbered `PASS` resources | Unsupported | Hard blocker |
-| Pass aliases | Unsupported | Hard blocker |
+| Downstream references to declared pass aliases | Unsupported | Hard blocker |
 | Preset-controlled pass filter or wrap mode | Not faithfully applied | Runtime fidelity qualification |
 | Intermediate mipmaps | Not faithfully supplied | Runtime fidelity qualification |
 | LUT wrap mode | Not faithfully applied | Runtime fidelity qualification |
@@ -116,13 +116,10 @@ Any frame history/feedback, original or non-immediate pass resource, or pass ali
 
 ## Hard blocker: original or non-immediate pass resources
 
-132 presets.
+118 presets.
 
 - `hlsl/borders/bigblur.cgp`
-- `hlsl/borders/gameboy-player/gameboy-player+crt-royale.cgp`
-- `hlsl/borders/sgb/sgb+crt-royale.cgp`
 - `hlsl/borders/sgba/sgba-gba-color+crt-easymode-halation.cgp`
-- `hlsl/cgp/crt-royale-kurozumi.cgp`
 - `hlsl/cgp/tvout/tvout+mdapt.cgp`
 - `hlsl/cgp/tvout+interlacing/tvout+mdapt+interlacing.cgp`
 - `hlsl/cgp/xsoft+scalefx-level2aa.cgp`
@@ -132,17 +129,6 @@ Any frame history/feedback, original or non-immediate pass resource, or pass ali
 - `hlsl/crt/crt-hyllian-multipass.cgp`
 - `hlsl/crt/crt-interlaced-halation.cgp`
 - `hlsl/crt/crt-lottes-multipass.cgp`
-- `hlsl/crt/crt-royale-fake-bloom-intel.cgp`
-- `hlsl/crt/crt-royale-fake-bloom.cgp`
-- `hlsl/crt/crt-royale-gdapt.cgp`
-- `hlsl/crt/crt-royale-intel.cgp`
-- `hlsl/crt/crt-royale-ntsc-256px-composite.cgp`
-- `hlsl/crt/crt-royale-ntsc-256px-svideo.cgp`
-- `hlsl/crt/crt-royale-ntsc-320px-composite.cgp`
-- `hlsl/crt/crt-royale-ntsc-320px-svideo.cgp`
-- `hlsl/crt/crt-royale-pal-r57shell.cgp`
-- `hlsl/crt/crt-royale-tvout+image-adjustment.cgp`
-- `hlsl/crt/crt-royale.cgp`
 - `hlsl/crt/crt-super-xbr.cgp`
 - `hlsl/crt/crtglow_gauss_ntsc_3phase.cgp`
 - `hlsl/crt/crtglow_gauss.cgp`
@@ -253,7 +239,7 @@ Any frame history/feedback, original or non-immediate pass resource, or pass ali
 
 ## Hard blocker: pass aliases
 
-19 presets.
+15 presets.
 
 - `hlsl/borders/gameboy-player/gameboy-player+crt-royale.cgp`
 - `hlsl/borders/sgb/sgb+crt-royale.cgp`
@@ -270,10 +256,6 @@ Any frame history/feedback, original or non-immediate pass resource, or pass ali
 - `hlsl/crt/crt-royale-pal-r57shell.cgp`
 - `hlsl/crt/crt-royale-tvout+image-adjustment.cgp`
 - `hlsl/crt/crt-royale.cgp`
-- `hlsl/pal/pal-r57shell-nes-svideo.cgp`
-- `hlsl/pal/pal-r57shell.cgp`
-- `hlsl/xbr/super-xbr-deposterize.cgp`
-- `hlsl/xbr/xbr-lv2-deposterize.cgp`
 
 ## Fidelity limitation: preset-controlled filter or wrap mode
 
