@@ -91,6 +91,11 @@
         <name>Reverse AA</name>
     </preset>
     <preset>
+        <path>hlsl/anti-aliasing/fx-aa.cgp</path>
+        <folder>Anti-Aliasing</folder>
+        <name>FXAA</name>
+    </preset>
+    <preset>
         <path>hlsl/anti-aliasing/aa-shader-4.o-level2.cgp</path>
         <folder>Anti-Aliasing</folder>
         <name>AA Shader 4.0 Level 2</name>
