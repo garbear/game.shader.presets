@@ -1,6 +1,6 @@
 # Windows HLSL compatibility
 
-This is the static, provisional compatibility ledger for Kodi RetroPlayer on Windows. Runtime qualification is intentionally deferred to Task 2; inclusion here does not claim that a preset compiles or renders correctly in Kodi.
+This is the finalized static and runtime-qualified compatibility ledger for Kodi RetroPlayer on Windows. The static audit maps renderer blockers and fidelity limitations across the complete HLSL preset tree; the exposed Windows catalog was then qualified in Kodi for compilation, resources, switching, and visual output on the audited runtime described below.
 
 - Audited libretro commit: `524835ca394e5fd1bf459c5090222d7159f5a5dc`
 - HLSL presets audited: 599
